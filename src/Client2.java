@@ -7,7 +7,7 @@ public class Client2 {
         try
         {
             System.out.println("Client started");
-            Socket clientSocket=new Socket("localhost",1224);
+            Socket clientSocket=new Socket("localhost",1234);
             BufferedReader userInput=new BufferedReader(new InputStreamReader(System.in));
             while(true){
 

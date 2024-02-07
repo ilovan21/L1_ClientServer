@@ -5,7 +5,7 @@ public class Server {
     public static void main(String[] args) {
         try {
 
-            ServerSocket serverSocket = new ServerSocket(1224);
+            ServerSocket serverSocket = new ServerSocket(1234);
             System.out.println("Serverul este pornit. Asteptand conexiuni...");
 
             while (true) {
