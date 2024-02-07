@@ -6,12 +6,12 @@ public class Server {
         try {
 
             ServerSocket serverSocket = new ServerSocket(1234);
-            System.out.println("Serverul este pornit. Asteptand conexiuni...");
+            System.out.println("Waiting for connections..");
 
             while (true) {
 
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("S-a conectat un nou client: " + clientSocket);
+                System.out.println("New client connected: " + clientSocket);
 
 
                 Thread clientThread = new Thread(new ClientHandler(clientSocket));
@@ -39,8 +39,8 @@ class ClientHandler implements Runnable {
 
             String clientMessage;
             while ((clientMessage = in.readLine()) != null) {
-                System.out.println("Mesaj de la client: " + clientMessage);
-                out.println("Server: Mesaj primit - " + clientMessage);
+                System.out.println("Client " + clientMessage);
+                out.println("Server: - " + clientMessage);
             }
 
             clientSocket.close();
