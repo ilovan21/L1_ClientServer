@@ -7,23 +7,35 @@ public class Client2 {
         try
         {
             System.out.println("Client started");
-            Socket clientSocket=new Socket("localhost",1234);
+            Socket clientSocket=new Socket("localhost",1999);
             BufferedReader userInput=new BufferedReader(new InputStreamReader(System.in));
-            while(true){
+            PrintWriter out= new PrintWriter(clientSocket.getOutputStream(),true);
+            // Înainte de bucla principală
+            Thread receiveThread = new Thread(() -> {
+                try {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                    String serverMessage;
+                    while ((serverMessage = in.readLine()) != null) {
+                        System.out.println("Server: " + serverMessage);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            receiveThread.start();
 
+// În bucla principală
+            while (true) {
                 System.out.println("Write a message");
                 String str = userInput.readLine();
-                PrintWriter out= new PrintWriter(clientSocket.getOutputStream(),true);
                 out.println(str);
 
-                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                System.out.println(in.readLine());
-
-                if(str.equalsIgnoreCase("BYE"))
+                if (str.equalsIgnoreCase("BYE"))
                     break;
             }
             clientSocket.close();
             userInput.close();
+            out.close();
         }
         catch(Exception e)
         {
